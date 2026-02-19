@@ -1,28 +1,22 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-app.post("/generate-roadmap", (req, res) => {
-    const job = req.body.job;
-
-    const roadmap = `
-STEP 1: Learn Basics of ${job}
-STEP 2: Learn Programming (Python/JavaScript)
-STEP 3: Study Core Concepts of ${job}
-STEP 4: Build Projects related to ${job}
-STEP 5: Prepare Resume & Portfolio
-STEP 6: Apply for ${job} Jobs
-`;
-
-    res.json({ roadmap });
+// Your routes here
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
-app.listen(5000, () => {
-    console.log("Server running on http://localhost:5000");
+// Use Railway's dynamic port or fallback to 5000
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
